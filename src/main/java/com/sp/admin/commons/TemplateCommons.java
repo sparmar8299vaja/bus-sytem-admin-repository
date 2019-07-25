@@ -1,11 +1,11 @@
-package com.sp.admin.template;
+package com.sp.admin.commons;
 
 import org.springframework.web.client.RestTemplate;
 
-public class Template {
+public class TemplateCommons {
      
-	private Template() {
-		
+	private TemplateCommons() {
+		super();
 	}
 	
 	public static RestTemplate getTemplate() {

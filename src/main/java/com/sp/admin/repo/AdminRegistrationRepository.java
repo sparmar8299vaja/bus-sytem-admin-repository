@@ -9,4 +9,5 @@ import com.sp.admin.entity.AdminRegistrationEntity;
 public interface AdminRegistrationRepository extends JpaRepository<AdminRegistrationEntity, Integer> {
      
 	public Optional<AdminRegistrationEntity> findByNameAndPassword(final String name, final String password);
+	public Optional<AdminRegistrationEntity> findByName(final String name);
 }

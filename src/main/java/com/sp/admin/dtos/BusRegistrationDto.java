@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.sp.admin.exceptions.InputValidationFailedException;
-
 public class BusRegistrationDto implements Serializable {
 
 	/**
@@ -127,16 +125,10 @@ public class BusRegistrationDto implements Serializable {
 	}
 
 	public Date getDateOfReach() {
-		if( this.dateOfLeave.equals(this.dateOfReach)) {
-			throw new InputValidationFailedException("leave and reach date or time must not be same");
-		}
 		return dateOfReach;
 	}
 
 	public String getBrandMailId() {
-		if(!this.brandMailId.contains("@")) {
-			throw new InputValidationFailedException("email id must contains @");
-		}
 		return brandMailId;
 	}
 

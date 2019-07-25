@@ -8,4 +8,5 @@ public interface BusRegistrationService {
    
 	public String addBusInfo(final BusRegistrationDto registrationDto);
 	public List<BusRegistrationDto> getAllBusInfo();
+	public BusRegistrationDto getBusById(final String busNo);
 }

@@ -258,8 +258,8 @@ public class BusRegistrationEntity {
 				.setTypeOfSeat(dto.getTypeOfSeat())
 				.setTypeOfBus(dto.getTypeOfBus())
 				.setDriverName(dto.getDriverName())
-				.setDriverMobileNo(dto.getDriverMobileNo().contains("+91") ? dto.getDriverMobileNo() : "+91".concat(dto.getDriverMobileNo()))
-				.setBrandMobileNo(dto.getBrandMobileNo().contains("+91") ? dto.getBrandMobileNo() : 
+				.setDriverMobileNo(dto.getDriverMobileNo().startsWith("+91") ? dto.getDriverMobileNo() : "+91".concat(dto.getDriverMobileNo()))
+				.setBrandMobileNo(dto.getBrandMobileNo().startsWith("+91") ? dto.getBrandMobileNo() : 
 					                                 "+91".concat(dto.getBrandMobileNo()))
 				.setBrandMailId(dto.getBrandMailId())
 				.setDateOfLeave(dto.getDateOfLeave())

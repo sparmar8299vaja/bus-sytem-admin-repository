@@ -3,12 +3,15 @@ package com.sp.admin.controller;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.dtos.UserDto;
 import com.sp.admin.service.AdminLoginService;
+import com.sp.admin.service.EncryptDecryptService;
 
 @RestController
 public class AdminLoginController {
@@ -16,8 +19,17 @@ public class AdminLoginController {
 	@Resource
 	private AdminLoginService adminLoginService; 
 	
+	@Resource
+	private EncryptDecryptService encryptDecryptService;
+	
 	@PostMapping(value = "/login")
 	public Boolean logIn(@Valid @RequestBody final UserDto user) {
 		return adminLoginService.adminLogin(user.getName(), user.getPassword());
 	}
+	
+	@GetMapping(value = "/adminforgotpassword/{name}")
+	public String forgotPassword(@PathVariable final String name) {
+		return adminLoginService.forgotPassword(name);
+	}
+	
 }

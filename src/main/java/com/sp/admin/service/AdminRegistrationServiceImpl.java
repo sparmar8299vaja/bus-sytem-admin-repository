@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.sp.admin.commons.SMSSenderCommons;
 import com.sp.admin.dtos.AdminRegistrationDto;
 import com.sp.admin.entity.AdminRegistrationEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
@@ -18,20 +19,21 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 
 	@Resource
 	private AdminRegistrationRepository registrationRepository;
+	
+	@Resource
+	private SMSSenderCommons sender;
 
 	@Override
 	public String registerAdmin(final AdminRegistrationDto registrationDto) {
-		String result = "admin not registered successfully";
 		Integer adminId = 0;
 		try {
-			adminId = registrationRepository.save(new AdminRegistrationEntity().convertDtoToEntity(registrationDto)).getId();
+			adminId = registrationRepository.save(new AdminRegistrationEntity().convertDtoToEntity(registrationDto))
+					.getId();
+			//sender.sendMessage(registrationDto.getMobileNo(), "congratulations you registred successfully on mybus");
 		} catch (Exception e) {
-			throw new ConstraintsVoilationException("name or mobile no already exist",e);
+			throw new ConstraintsVoilationException("problem while register admin (may be admin name or mobile no already exist)", e);
 		}
-		if (adminId != null) {
-			result = "admin registered successfully";
-		}
-		return result;
+		return adminId != null ? "admin registered successfully" : "admin not registered successfully";
 	}
 
 	@Override
@@ -47,10 +49,6 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 	@Override
 	public AdminRegistrationDto getAdminById(final int id) {
 		Optional<AdminRegistrationEntity> adminEntity = registrationRepository.findById(id);
-		if (adminEntity.isPresent()) {
-			return new AdminRegistrationEntity().convertEntityToDto(adminEntity.get());
-		} else {
-			return null;
-		}
+		return adminEntity.isPresent() ? new AdminRegistrationEntity().convertEntityToDto(adminEntity.get()) : null;
 	}
 }
