@@ -25,7 +25,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
 
 	@Override
 	public Boolean adminLogin(final String userName, final String password) {
-		return adminRegRepo.findByNameAndPassword(userName, password).isPresent();
+		return adminRegRepo.findByNameAndPassword(userName,encryptDecryptService.encrypt(password, userName)).isPresent();
 	}
 
 	@Override

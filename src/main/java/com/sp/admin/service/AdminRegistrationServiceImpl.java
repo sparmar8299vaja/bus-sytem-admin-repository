@@ -23,11 +23,18 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 	@Resource
 	private SMSSenderCommons sender;
 
+	@Resource
+	private EncryptDecryptService encryptDecryptService;
+	
 	@Override
 	public String registerAdmin(final AdminRegistrationDto registrationDto) {
 		Integer adminId = 0;
 		try {
-			adminId = registrationRepository.save(new AdminRegistrationEntity().convertDtoToEntity(registrationDto))
+			adminId = registrationRepository.save(new AdminRegistrationEntity().convertDtoToEntity(new AdminRegistrationDto.AdminRegBuilder()
+			        .setPassword(encryptDecryptService.encrypt(registrationDto.getPassword(), registrationDto.getName()))
+			        .setMobileNo(registrationDto.getMobileNo())
+			        .setName(registrationDto.getName())
+			        .build()))
 					.getId();
 			//sender.sendMessage(registrationDto.getMobileNo(), "congratulations you registred successfully on mybus");
 		} catch (Exception e) {

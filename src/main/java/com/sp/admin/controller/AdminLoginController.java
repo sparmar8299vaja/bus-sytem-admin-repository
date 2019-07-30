@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.dtos.UserDto;
 import com.sp.admin.service.AdminLoginService;
-import com.sp.admin.service.EncryptDecryptService;
 
 @RestController
 public class AdminLoginController {
     
 	@Resource
 	private AdminLoginService adminLoginService; 
-	
-	@Resource
-	private EncryptDecryptService encryptDecryptService;
 	
 	@PostMapping(value = "/login")
 	public Boolean logIn(@Valid @RequestBody final UserDto user) {
