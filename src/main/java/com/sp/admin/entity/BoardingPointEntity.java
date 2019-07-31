@@ -58,14 +58,14 @@ public class BoardingPointEntity {
 		}
 	}
 
-	public BoardingPointEntity converDtoToEntity(final BoardingPointDto dto) {
+	public static BoardingPointEntity converDtoToEntity(final BoardingPointDto dto) {
        return new BoardingPointEntity
               .BoardingPointEntityBuilder()
               .setName(dto.getName())
               .build();
 	}
 
-	public BoardingPointDto converEntityToDto(final BoardingPointEntity entity) {
+	public static BoardingPointDto converEntityToDto(final BoardingPointEntity entity) {
         return new BoardingPointDto
         		.BoardingPointDtoBuilder()
         		.setName(entity.getName())

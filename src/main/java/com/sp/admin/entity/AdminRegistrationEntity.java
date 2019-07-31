@@ -26,7 +26,7 @@ public class AdminRegistrationEntity {
 	private String password;
 
 	public AdminRegistrationEntity() {
-
+		
 	}
 
 	public AdminRegistrationEntity(final AdminRegEntityBuilder builder) {
@@ -76,7 +76,7 @@ public class AdminRegistrationEntity {
 		}
 	}
 
-	public AdminRegistrationDto convertEntityToDto(final AdminRegistrationEntity entity) {
+	public static AdminRegistrationDto convertEntityToDto(final AdminRegistrationEntity entity) {
 		return new AdminRegistrationDto.AdminRegBuilder()
 				.setMobileNo(entity.getMobileNo())
 				.setName(entity.getName())
@@ -84,13 +84,18 @@ public class AdminRegistrationEntity {
 				.build();
 	}
 
-	public AdminRegistrationEntity convertDtoToEntity(final AdminRegistrationDto dto) {
+	public static AdminRegistrationEntity convertDtoToEntity(final AdminRegistrationDto dto) {
 		return new AdminRegistrationEntity.AdminRegEntityBuilder()
 				.setMobileNo(
-						dto.getMobileNo().startsWith("+91") ? dto.getMobileNo() : "+91".concat(dto.getMobileNo()))
+						dto.getMobileNo().startsWith("91") ? dto.getMobileNo() : "91".concat(dto.getMobileNo()))
 				.setName(dto.getName())
 				.setPassword(dto.getPassword())
 				.build();
 
+	}
+
+	//this method used for testing only
+	public void setId(int id) {
+		this.id = id;
 	}
 }

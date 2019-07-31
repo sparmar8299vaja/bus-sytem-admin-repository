@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.dtos.UserDto;
 import com.sp.admin.service.AdminLoginService;
 
 @RestController
+@RequestMapping(value = "/login/v1")
 public class AdminLoginController {
     
 	@Resource
 	private AdminLoginService adminLoginService; 
 	
-	@PostMapping(value = "/login")
+	@PostMapping(value = "/adminlogin")
 	public Boolean logIn(@Valid @RequestBody final UserDto user) {
 		return adminLoginService.adminLogin(user.getName(), user.getPassword());
 	}

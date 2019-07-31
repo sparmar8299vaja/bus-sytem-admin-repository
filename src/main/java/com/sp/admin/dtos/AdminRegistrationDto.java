@@ -6,25 +6,28 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class AdminRegistrationDto implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@JsonIgnore
+	private Integer id;
 	@NotNull(message = "Bad Request Name Must Not Be Null")
 	@NotBlank(message = "Bad Request Name Must Not Be Empty")
 	private String name;
 	@NotNull(message = "Bad Request Mobile Number Must Not Be Null")
 	@NotBlank(message = "Bad Request Mobile Number Must Not Be Empty")
-	@Size(max = 13,min = 10,message = "Mobile Number Must Contains Minimum 10 Or Maximum 13 Digits With Contry Code")
+	@Size(max = 12,min = 10,message = "Mobile Number Must Contains Minimum 10 Or Maximum 12 Digits With Contry Code")
 	private String mobileNo;
 	@NotNull(message = "Bad Request Password Must Not Be Null")
 	@NotBlank(message = "Bad Request Password Must Not Be Empty")
 	@Size(max = 10,min = 8,message = "Password Must Contains Maximum 10 Or Minimum 8 Characters")
 	private String password;
-
+    
 	public AdminRegistrationDto() {
 		super();
 	}
@@ -71,5 +74,14 @@ public class AdminRegistrationDto implements Serializable {
 		public AdminRegistrationDto build() {
 			return new AdminRegistrationDto(this);
 		}
+	}
+
+	//this gettter setter methods used for testing only
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	public Integer getId() {
+		return id;
 	}
 }

@@ -26,11 +26,12 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 	@Override
 	public String addBusInfo(final BusRegistrationDto registrationDto) {
 		String result = null;
-		BusRegistrationEntity convertDtoToEntity = new BusRegistrationEntity().convertDtoToEntity(registrationDto);
+		BusRegistrationEntity convertDtoToEntity = BusRegistrationEntity.convertDtoToEntity(registrationDto);
 		if (busRegistrationRepository.existsById(convertDtoToEntity.getBusNo()))
 			throw new ConstraintsVoilationException("Bus No Already Exist");
 		try {
 			result = busRegistrationRepository.save(convertDtoToEntity).getBusNo();
+
 			/*
 			 * sender.sendMessage(registrationDto.getBrandMobileNo(),
 			 * "congratulations your bus addded for date" + " " +
@@ -38,7 +39,6 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 			 * registrationDto.getFromLocation() + " to " + registrationDto.getToLocation()
 			 * + " successfully on mybus ");
 			 */
-
 		} catch (Exception e) {
 			throw new ConstraintsVoilationException("Driver Mobile No Already Exist", e);
 		}
@@ -50,7 +50,7 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 		List<BusRegistrationDto> dtos = new ArrayList<>();
 		List<BusRegistrationEntity> busList = busRegistrationRepository.findAll();
 		if (!busList.isEmpty()) {
-			busList.forEach(busEntity -> dtos.add(new BusRegistrationEntity().convertEntityToDto(busEntity)));
+			busList.forEach(busEntity -> dtos.add(BusRegistrationEntity.convertEntityToDto(busEntity)));
 		}
 		return dtos;
 	}
@@ -58,7 +58,7 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 	@Override
 	public BusRegistrationDto getBusById(final String busNo) {
 		Optional<BusRegistrationEntity> busInfo = busRegistrationRepository.findById(busNo);
-		return busInfo.isPresent() ? new BusRegistrationEntity().convertEntityToDto(busInfo.get()) : null;
+		return busInfo.isPresent() ? BusRegistrationEntity.convertEntityToDto(busInfo.get()) : null;
 	}
 
 }

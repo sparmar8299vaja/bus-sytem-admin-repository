@@ -9,18 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.dtos.AdminRegistrationDto;
 import com.sp.admin.service.AdminRegistrationService;
 
 @RestController
+@RequestMapping(value = "/registration/v1")
 public class AdminRegistrationController {
 
 	@Resource
 	private AdminRegistrationService registrationService;
 
-	@PostMapping(value = "/register")
+	@PostMapping(value = "/registeradmin")
 	public String registerAdmin(@Valid @RequestBody final AdminRegistrationDto registrationDto) {
 		return registrationService.registerAdmin(registrationDto);
 	}

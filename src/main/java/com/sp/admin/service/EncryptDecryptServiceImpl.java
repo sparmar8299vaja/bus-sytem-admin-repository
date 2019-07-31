@@ -11,7 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.stereotype.Service;
 
-import com.sp.commons.exception.EncryptionDecryptionException;
+import com.sp.admin.exceptions.EncryptionDecryptionException;
 
 @Service
 public class EncryptDecryptServiceImpl implements EncryptDecryptService {

@@ -249,7 +249,7 @@ public class BusRegistrationEntity {
 		}
 	}
 
-	public BusRegistrationEntity convertDtoToEntity(final BusRegistrationDto dto) {
+	public static BusRegistrationEntity convertDtoToEntity(final BusRegistrationDto dto) {
 		return new BusRegistrationEntity.BusRegistrationEntityBuilder()
 				.setBusNo(dto.getBusNo())
 				.setBrandName(dto.getBrandName())
@@ -258,22 +258,22 @@ public class BusRegistrationEntity {
 				.setTypeOfSeat(dto.getTypeOfSeat())
 				.setTypeOfBus(dto.getTypeOfBus())
 				.setDriverName(dto.getDriverName())
-				.setDriverMobileNo(dto.getDriverMobileNo().startsWith("+91") ? dto.getDriverMobileNo() : "+91".concat(dto.getDriverMobileNo()))
-				.setBrandMobileNo(dto.getBrandMobileNo().startsWith("+91") ? dto.getBrandMobileNo() : 
-					                                 "+91".concat(dto.getBrandMobileNo()))
+				.setDriverMobileNo(dto.getDriverMobileNo().startsWith("91") ? dto.getDriverMobileNo() : "91".concat(dto.getDriverMobileNo()))
+				.setBrandMobileNo(dto.getBrandMobileNo().startsWith("91") ? dto.getBrandMobileNo() : 
+					                                 "91".concat(dto.getBrandMobileNo()))
 				.setBrandMailId(dto.getBrandMailId())
 				.setDateOfLeave(dto.getDateOfLeave())
 				.setDateOfReach(dto.getDateOfReach())
 				.setFare(dto.getFare())
 				.setFromLocation(dto.getFromLocation())
 				.setBoardingPointEntity(dto.getBoardingPointDtos().stream()
-						    .map(e-> new BoardingPointEntity().converDtoToEntity(e)).collect(Collectors.toSet()))
+						    .map(e -> BoardingPointEntity.converDtoToEntity(e)).collect(Collectors.toSet()))
 				.setDroppingPointEntity(dto.getDroppingPointDtos().stream()
-						    .map(e-> new DroppingPointEntity().convertDtoToEntity(e)).collect(Collectors.toSet()))
+						    .map(e -> DroppingPointEntity.convertDtoToEntity(e)).collect(Collectors.toSet()))
 				.build();
 	}
 	
-	public BusRegistrationDto convertEntityToDto(final BusRegistrationEntity entity) {
+	public static BusRegistrationDto convertEntityToDto(final BusRegistrationEntity entity) {
 		return new BusRegistrationDto.BusRegistrationDtoBuilder()
 				.setBusNo(entity.getBusNo())
 				.setBrandName(entity.getBrandName())
@@ -290,9 +290,9 @@ public class BusRegistrationEntity {
 				.setFare(entity.getFare())
 				.setFromLocation(entity.getFromLocation())
 				.setBoardingPointDtos(entity.getBoardingPointEntity().stream()
-						.map(e->e.converEntityToDto(e)).collect(Collectors.toSet()))
+						.map(e -> BoardingPointEntity.converEntityToDto(e)).collect(Collectors.toSet()))
 				.setDroppingPointDtos(entity.getDroppingPointEntity().parallelStream()
-						.map(e->e.convertEntityToDto(e)).collect(Collectors.toSet()))
+						.map(e -> DroppingPointEntity.convertEntityToDto(e)).collect(Collectors.toSet()))
 				.build();
 	}
 }

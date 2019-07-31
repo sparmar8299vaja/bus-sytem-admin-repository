@@ -58,14 +58,14 @@ public class DroppingPointEntity {
 		}
 	}
 
-	public DroppingPointEntity convertDtoToEntity(final DroppingPointDto dto) {
+	public static DroppingPointEntity convertDtoToEntity(final DroppingPointDto dto) {
         return new DroppingPointEntity
                .DroppingPointEntityBuilder()
                .setName(dto.getName())
                .build();
 	}
 
-	public DroppingPointDto convertEntityToDto(final DroppingPointEntity entity) {
+	public static DroppingPointDto convertEntityToDto(final DroppingPointEntity entity) {
         return new DroppingPointDto
         		.DroppingPointDtoBuilder()
         		.setName(entity.getName())

@@ -1,8 +1,8 @@
 package com.sp.admin.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -12,6 +12,7 @@ import com.sp.admin.commons.SMSSenderCommons;
 import com.sp.admin.dtos.AdminRegistrationDto;
 import com.sp.admin.entity.AdminRegistrationEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
+import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
 
 @Service
@@ -19,43 +20,46 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 
 	@Resource
 	private AdminRegistrationRepository registrationRepository;
-	
+
 	@Resource
 	private SMSSenderCommons sender;
 
 	@Resource
 	private EncryptDecryptService encryptDecryptService;
-	
+
 	@Override
 	public String registerAdmin(final AdminRegistrationDto registrationDto) {
-		Integer adminId = 0;
+		Integer adminId = null;
 		try {
-			adminId = registrationRepository.save(new AdminRegistrationEntity().convertDtoToEntity(new AdminRegistrationDto.AdminRegBuilder()
-			        .setPassword(encryptDecryptService.encrypt(registrationDto.getPassword(), registrationDto.getName()))
-			        .setMobileNo(registrationDto.getMobileNo())
-			        .setName(registrationDto.getName())
-			        .build()))
+			adminId = registrationRepository.save(AdminRegistrationEntity.convertDtoToEntity(new AdminRegistrationDto.AdminRegBuilder()
+					        .setMobileNo(registrationDto.getMobileNo())
+							.setName(registrationDto.getName()).setPassword(encryptDecryptService
+							.encrypt(registrationDto.getPassword(), registrationDto.getName()))
+							.build()))
 					.getId();
 			//sender.sendMessage(registrationDto.getMobileNo(), "congratulations you registred successfully on mybus");
 		} catch (Exception e) {
-			throw new ConstraintsVoilationException("problem while register admin (may be admin name or mobile no already exist)", e);
+			throw new ConstraintsVoilationException(
+					"problem while register admin (may be admin name or mobile no already exist)", e);
 		}
-		return adminId != null ? "admin registered successfully" : "admin not registered successfully";
+		return "admin registered successfully having id "+ adminId;
 	}
 
 	@Override
 	public List<AdminRegistrationDto> getAllAdmin() {
-		List<AdminRegistrationDto> dtos = new ArrayList<>();
 		List<AdminRegistrationEntity> adminList = registrationRepository.findAll();
-		if (!adminList.isEmpty()) {
-			adminList.forEach(adminEntity -> dtos.add(new AdminRegistrationEntity().convertEntityToDto(adminEntity)));
+		if (adminList.isEmpty()) {
+			throw new DataNotFoundException("Empty Data Set");
 		}
-		return dtos;
+		return adminList.stream().map(AdminRegistrationEntity::convertEntityToDto).collect(Collectors.toList());
 	}
 
 	@Override
 	public AdminRegistrationDto getAdminById(final int id) {
 		Optional<AdminRegistrationEntity> adminEntity = registrationRepository.findById(id);
-		return adminEntity.isPresent() ? new AdminRegistrationEntity().convertEntityToDto(adminEntity.get()) : null;
+		if(!adminEntity.isPresent()) {
+			throw new DataNotFoundException("required id based admin not present in data base");
+		} 
+		return AdminRegistrationEntity.convertEntityToDto(adminEntity.get());
 	}
 }

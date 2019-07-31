@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class BusRegistrationDto implements Serializable {
 
@@ -38,9 +39,11 @@ public class BusRegistrationDto implements Serializable {
 	private String driverName;
 	@NotNull(message = "Bad Request Driver Mobile No Must Not Be Null")
 	@NotBlank(message = "Bad Request Driver Mobile No Must Not Be Empty")
+	@Size(max = 12,min = 10,message = "Driver Mobile Number Must Contains Minimum 10 Or Maximum 12 Digits With Contry Code")
 	private String driverMobileNo;
 	@NotNull(message = "Bad Request Brand Mobile No Must Not Be Null")
 	@NotBlank(message = "Bad Request Brand Mobile No Must Not Be Empty")
+	@Size(max = 12,min = 10,message = "Brand Mobile Number Must Contains Minimum 10 Or Maximum 12 Digits With Contry Code")
 	private String brandMobileNo;
 	@NotNull(message = "Bad Request Date Of Leave Must Not Be Null")
 	private Date dateOfLeave;
