@@ -3,6 +3,7 @@ package com.sp.admin.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -12,6 +13,7 @@ import com.sp.admin.commons.SMSSenderCommons;
 import com.sp.admin.dtos.BusRegistrationDto;
 import com.sp.admin.entity.BusRegistrationEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
+import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.BusRegistrationRepository;
 
 @Service
@@ -26,11 +28,11 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 	@Override
 	public String addBusInfo(final BusRegistrationDto registrationDto) {
 		String result = null;
-		BusRegistrationEntity convertDtoToEntity = BusRegistrationEntity.convertDtoToEntity(registrationDto);
-		if (busRegistrationRepository.existsById(convertDtoToEntity.getBusNo()))
+		BusRegistrationEntity busRegEntity = BusRegistrationEntity.convertDtoToEntity(registrationDto);
+		if (busRegistrationRepository.existsById(busRegEntity.getBusNo()))
 			throw new ConstraintsVoilationException("Bus No Already Exist");
 		try {
-			result = busRegistrationRepository.save(convertDtoToEntity).getBusNo();
+			result = busRegistrationRepository.save(busRegEntity).getBusNo();
 
 			/*
 			 * sender.sendMessage(registrationDto.getBrandMobileNo(),
@@ -42,23 +44,25 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 		} catch (Exception e) {
 			throw new ConstraintsVoilationException("Driver Mobile No Already Exist", e);
 		}
-		return result != null ? "Bus Added Successfully" : "Bus Not Added Successfully";
+		return "Bus Added Successfully have no "+result;
 	}
 
 	@Override
 	public List<BusRegistrationDto> getAllBusInfo() {
-		List<BusRegistrationDto> dtos = new ArrayList<>();
 		List<BusRegistrationEntity> busList = busRegistrationRepository.findAll();
-		if (!busList.isEmpty()) {
-			busList.forEach(busEntity -> dtos.add(BusRegistrationEntity.convertEntityToDto(busEntity)));
+		if (busList.isEmpty()) {
+			throw new DataNotFoundException("Empty Data Set");
 		}
-		return dtos;
+		return 	busList.stream().map(BusRegistrationEntity::convertEntityToDto).collect(Collectors.toList());
 	}
 
 	@Override
 	public BusRegistrationDto getBusById(final String busNo) {
 		Optional<BusRegistrationEntity> busInfo = busRegistrationRepository.findById(busNo);
-		return busInfo.isPresent() ? BusRegistrationEntity.convertEntityToDto(busInfo.get()) : null;
+		if(!busInfo.isPresent()) {
+			throw new DataNotFoundException("bus not exist in data base with specified number");
+		} 
+		return BusRegistrationEntity.convertEntityToDto(busInfo.get());
 	}
 
 }
