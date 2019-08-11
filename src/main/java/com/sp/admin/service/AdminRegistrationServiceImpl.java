@@ -15,6 +15,8 @@ import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
 
+// this service is used to register admin
+
 @Service
 public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 
