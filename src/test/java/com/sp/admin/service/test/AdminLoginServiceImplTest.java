@@ -20,6 +20,7 @@ import com.sp.admin.service.AdminLoginService;
 import com.sp.admin.service.AdminLoginServiceImpl;
 import com.sp.admin.service.EncryptDecryptService;
 
+//admin log in service test
 @RunWith(MockitoJUnitRunner.Silent.class) 
 public class AdminLoginServiceImplTest {
 	
