@@ -11,7 +11,7 @@ import com.sp.admin.entity.AdminRegistrationEntity;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
 
-//service used for register admin and encrypt password
+
 @Service
 public class AdminLoginServiceImpl implements AdminLoginService {
 
