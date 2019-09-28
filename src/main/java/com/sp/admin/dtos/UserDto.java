@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-//use for login
+
 public class UserDto implements Serializable {
 
 	/**
