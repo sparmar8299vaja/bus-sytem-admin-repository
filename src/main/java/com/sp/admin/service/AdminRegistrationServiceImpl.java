@@ -37,6 +37,8 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 					        .setMobileNo(registrationDto.getMobileNo())
 							.setName(registrationDto.getName()).setPassword(encryptDecryptService
 							.encrypt(registrationDto.getPassword(), registrationDto.getName()))
+							.setMailId(registrationDto.getMailId())
+							.setGender(registrationDto.getGender())
 							.build()))
 					.getId();
 			//sender.sendMessage(registrationDto.getMobileNo(), "congratulations you registred successfully on mybus");

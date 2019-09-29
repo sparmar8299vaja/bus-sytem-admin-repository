@@ -26,7 +26,7 @@ public class AdminRegistrationController {
 	public String registerAdmin(@Valid @RequestBody final AdminRegistrationDto registrationDto) {
 		return registrationService.registerAdmin(registrationDto);
 	}
-
+      
 	@GetMapping(value = "/showadminlist")
 	public List<AdminRegistrationDto> showAllAdmin() {
 		return registrationService.getAllAdmin();

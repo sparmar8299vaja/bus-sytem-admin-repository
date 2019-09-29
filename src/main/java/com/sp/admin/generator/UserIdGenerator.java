@@ -12,14 +12,14 @@ import org.hibernate.id.IdentifierGenerator;
 import com.sp.admin.exceptions.IdentityNotGeneratedException;
 import com.sp.admin.sql_query.SQLQuery;
 
-public class AdminIdGenerator implements IdentifierGenerator {
+public class UserIdGenerator implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(final SharedSessionContractImplementor session, final Object object){
 		Connection connection = null;
 		int startId = 567890;
 		connection = session.connection();
-		try(PreparedStatement prepareStatement = connection.prepareStatement(SQLQuery.ADMIN_REG_ID); ResultSet rs = prepareStatement.executeQuery()) {
+		try(PreparedStatement prepareStatement = connection.prepareStatement(SQLQuery.USER_REG_ID); ResultSet rs = prepareStatement.executeQuery()) {
 			rs.next();
 			int id = rs.getInt(1);
 			if (id == 0) {
