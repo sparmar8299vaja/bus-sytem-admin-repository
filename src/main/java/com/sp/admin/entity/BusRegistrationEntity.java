@@ -1,6 +1,5 @@
 package com.sp.admin.entity;
 
-import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.sp.admin.dtos.BusRegistrationDto;
 
@@ -43,11 +40,9 @@ public class BusRegistrationEntity {
 	@Column(name = "brand_mo_no")
 	private String brandMobileNo;
 	@Column(name = "date_of_leave")
-	@Temporal(value = TemporalType.TIMESTAMP)
-	private Date dateOfLeave;
-	@Temporal(value = TemporalType.TIMESTAMP)
+	private String dateOfLeave;
 	@Column(name = "date_of_reach")
-	private Date dateOfReach;
+	private String dateOfReach;
 	@Column(name = "brand_mail_id")
 	private String brandMailId;
 	@Column(name = "fare")
@@ -58,7 +53,15 @@ public class BusRegistrationEntity {
 	@OneToMany(targetEntity = BoardingPointEntity.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
 	@JoinColumn(name = "fk_bus_no", referencedColumnName = "bus_no")
 	private Set<BoardingPointEntity> boardingPointEntity;
-
+	@Column(name = "start_loc")
+	private String startLoc;
+	@Column(name = "end_loc")
+	private String endLoc;
+	@Column(name = "leave_time")
+	private String leaveTime;
+	@Column(name = "reach_time")
+	private String reachTime;
+	
 	public BusRegistrationEntity() {
 		super();
 	}
@@ -80,6 +83,10 @@ public class BusRegistrationEntity {
 		this.fare = builder.fare;
 		this.boardingPointEntity = builder.boardingPointEntity;
 		this.droppingPointEntity = builder.droppingPointEntity;
+		this.startLoc = builder.startLoc;
+		this.endLoc = builder.endLoc;
+		this.leaveTime = builder.leaveTime;
+		this.reachTime = builder.reachTime;
 	}
 
 	public String getBusNo() {
@@ -122,11 +129,11 @@ public class BusRegistrationEntity {
 		return brandMobileNo;
 	}
 
-	public Date getDateOfLeave() {
+	public String getDateOfLeave() {
 		return dateOfLeave;
 	}
 
-	public Date getDateOfReach() {
+	public String getDateOfReach() {
 		return dateOfReach;
 	}
 
@@ -146,6 +153,22 @@ public class BusRegistrationEntity {
 		return boardingPointEntity;
 	}
 
+	public String getStartLoc() {
+		return startLoc;
+	}
+
+	public String getEndLoc() {
+		return endLoc;
+	}
+
+	public String getLeaveTime() {
+		return leaveTime;
+	}
+
+	public String getReachTime() {
+		return reachTime;
+	}
+
 	public static class BusRegistrationEntityBuilder {
 		private String busNo;
 		private String brandName;
@@ -157,12 +180,16 @@ public class BusRegistrationEntity {
 		private String driverName;
 		private String driverMobileNo;
 		private String brandMobileNo;
-		private Date dateOfLeave;
-		private Date dateOfReach;
+		private String dateOfLeave;
+		private String dateOfReach;
 		private String brandMailId;
 		private int fare;
 		private Set<DroppingPointEntity> droppingPointEntity;
 		private Set<BoardingPointEntity> boardingPointEntity;
+		private String startLoc;
+		private String endLoc;
+		private String leaveTime;
+		private String reachTime;
 
 		public BusRegistrationEntityBuilder setBusNo(final String busNo) {
 			this.busNo = busNo;
@@ -214,12 +241,12 @@ public class BusRegistrationEntity {
 			return this;
 		}
 
-		public BusRegistrationEntityBuilder setDateOfLeave(final Date dateOfLeave) {
+		public BusRegistrationEntityBuilder setDateOfLeave(final String dateOfLeave) {
 			this.dateOfLeave = dateOfLeave;
 			return this;
 		}
 
-		public BusRegistrationEntityBuilder setDateOfReach(final Date dateOfReach) {
+		public BusRegistrationEntityBuilder setDateOfReach(final String dateOfReach) {
 			this.dateOfReach = dateOfReach;
 			return this;
 		}
@@ -241,6 +268,26 @@ public class BusRegistrationEntity {
 
 		public BusRegistrationEntityBuilder setBoardingPointEntity(final Set<BoardingPointEntity> boardingPointEntity) {
 			this.boardingPointEntity = boardingPointEntity;
+			return this;
+		}
+
+		public BusRegistrationEntityBuilder setStartLoc(String startLoc) {
+			this.startLoc = startLoc;
+			return this;
+		}
+
+		public BusRegistrationEntityBuilder setEndLoc(String endLoc) {
+			this.endLoc = endLoc;
+			return this;
+		}
+
+		public BusRegistrationEntityBuilder setLeaveTime(String leaveTime) {
+			this.leaveTime = leaveTime;
+			return this;
+		}
+
+		public BusRegistrationEntityBuilder setReachTime(String reachTime) {
+			this.reachTime = reachTime;
 			return this;
 		}
 
@@ -267,9 +314,13 @@ public class BusRegistrationEntity {
 				.setFare(dto.getFare())
 				.setFromLocation(dto.getFromLocation())
 				.setBoardingPointEntity(dto.getBoardingPointDtos().stream()
-						    .map(e -> BoardingPointEntity.converDtoToEntity(e)).collect(Collectors.toSet()))
+						    .map(BoardingPointEntity::converDtoToEntity).collect(Collectors.toSet()))
 				.setDroppingPointEntity(dto.getDroppingPointDtos().stream()
-						    .map(e -> DroppingPointEntity.convertDtoToEntity(e)).collect(Collectors.toSet()))
+						    .map(DroppingPointEntity::convertDtoToEntity).collect(Collectors.toSet()))
+				.setEndLoc(dto.getEndLoc())
+				.setStartLoc(dto.getStartLoc())
+				.setLeaveTime(dto.getLeaveTime())
+				.setReachTime(dto.getReachTime())
 				.build();
 	}
 	
@@ -290,9 +341,13 @@ public class BusRegistrationEntity {
 				.setFare(entity.getFare())
 				.setFromLocation(entity.getFromLocation())
 				.setBoardingPointDtos(entity.getBoardingPointEntity().stream()
-						.map(e -> BoardingPointEntity.converEntityToDto(e)).collect(Collectors.toSet()))
-				.setDroppingPointDtos(entity.getDroppingPointEntity().parallelStream()
-						.map(e -> DroppingPointEntity.convertEntityToDto(e)).collect(Collectors.toSet()))
+						.map(BoardingPointEntity::converEntityToDto).collect(Collectors.toSet()))
+				.setDroppingPointDtos(entity.getDroppingPointEntity().stream()
+						.map(DroppingPointEntity::convertEntityToDto).collect(Collectors.toSet()))
+				.setEndLoc(entity.getEndLoc())
+				.setStartLoc(entity.getStartLoc())
+				.setLeaveTime(entity.getLeaveTime())
+				.setReachTime(entity.getReachTime())
 				.build();
 	}
 }

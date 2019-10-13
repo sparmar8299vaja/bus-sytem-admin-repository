@@ -36,4 +36,9 @@ public class AdminRegistrationController {
 	public AdminRegistrationDto showSingleAdmin(@PathVariable final int id) {
 		return registrationService.getAdminById(id);
 	}
+	
+	@GetMapping(value = "/forgot_password/{name}")
+	public String forgotPassword(@PathVariable final String name) {
+		return registrationService.forgotPassword(name);
+	}
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class UserDto implements Serializable {
+public class UserAuthenticationDto implements Serializable {
 
 	/**
 	* 
@@ -19,11 +19,11 @@ public class UserDto implements Serializable {
 	@NotBlank(message = "Bad Request Password Must Not Be Empty")
 	private String password;
 
-	public UserDto() {
+	public UserAuthenticationDto() {
 		super();
 	}
 
-	public UserDto(final UserDtoBuilder builder) {
+	public UserAuthenticationDto(final UserDtoBuilder builder) {
 		this.name = builder.name;
 		this.password = builder.password;
 	}
@@ -51,8 +51,8 @@ public class UserDto implements Serializable {
 			return this;
 		}
 		
-		public UserDto build() {
-			return new UserDto(this);
+		public UserAuthenticationDto build() {
+			return new UserAuthenticationDto(this);
 		}
 	}
 }

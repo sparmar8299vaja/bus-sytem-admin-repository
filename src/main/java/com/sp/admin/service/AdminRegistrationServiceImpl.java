@@ -15,8 +15,6 @@ import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
 
-// this service is used to register admin
-
 @Service
 public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 
@@ -65,5 +63,23 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 			throw new DataNotFoundException("required id based admin not present in data base");
 		} 
 		return AdminRegistrationEntity.convertEntityToDto(adminEntity.get());
+	}
+	
+	@Override
+	public String forgotPassword(final String userName) {
+		Optional<AdminRegistrationEntity> adminEntity = registrationRepository.findByName(userName);
+		if (!adminEntity.isPresent()) {
+			throw new DataNotFoundException("user name does not exist");
+		}
+		AdminRegistrationEntity adminRegistrationEntity = adminEntity.get();
+
+		/*
+		 * smsCommons.sendMessage(adminRegistrationEntity.getMobileNo(), "hi " +
+		 * adminRegistrationEntity.getName() + " your password is " +
+		 * encryptDecryptService .decrypt(adminRegistrationEntity.getPassword(),
+		 * adminRegistrationEntity.getName()));
+		 */
+
+		return "password send on your registered mobile number via sms";
 	}
 }

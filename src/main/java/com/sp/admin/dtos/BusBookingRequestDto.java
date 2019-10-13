@@ -1,7 +1,6 @@
 package com.sp.admin.dtos;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -20,7 +19,8 @@ public class BusBookingRequestDto implements Serializable {
 	@NotBlank(message = "Bad Request To Location Must Not Be Empty")
 	private String toLocation;
 	@NotNull(message = "Bad Request Date Of Leave Must Not Be Null")
-	private Date leaveDate;
+	@NotBlank(message = "Bad Request Date Of Leave Must Not Be Empty")
+	private String leaveDate;
 
 	public BusBookingRequestDto() {
 		super();
@@ -40,14 +40,14 @@ public class BusBookingRequestDto implements Serializable {
 		return toLocation;
 	}
 
-	public Date getLeaveDate() {
+	public String getLeaveDate() {
 		return leaveDate;
 	}
 
 	public static class BusBookingRequestDtoBuilder {
 		private String fromLocation;
 		private String toLocation;
-		private Date leaveDate;
+		private String leaveDate;
 
 		public BusBookingRequestDtoBuilder setFromLocation(String fromLocation) {
 			this.fromLocation = fromLocation;
@@ -59,7 +59,7 @@ public class BusBookingRequestDto implements Serializable {
 			return this;
 		}
 
-		public BusBookingRequestDtoBuilder setLeaveDate(Date leaveDate) {
+		public BusBookingRequestDtoBuilder setLeaveDate(String leaveDate) {
 			this.leaveDate = leaveDate;
 			return this;
 		}

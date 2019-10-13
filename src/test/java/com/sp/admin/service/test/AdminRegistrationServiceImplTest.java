@@ -93,6 +93,22 @@ public class AdminRegistrationServiceImplTest {
 		verify(regRepository,times(1)).findById(ADMIN_ID);
 	}
 	
+	@Test
+	public void forgotPasswordTest() {
+		when(regRepository.findByName(Mockito.anyString())).thenReturn(Optional.of(getAdminRegEntity()));
+		adminRegistrationService.forgotPassword(NAME);
+		verify(regRepository,times(1)).findByName(NAME);
+	}
+	
+	
+	@Test(expected = DataNotFoundException.class)
+	public void forgotPasswordTestThrowExceptionWhenUserNotFound() {
+		when(regRepository.findByName(Mockito.anyString())).thenReturn(Optional.empty());
+		adminRegistrationService.forgotPassword(NAME);
+		verify(regRepository,times(1)).findByName(NAME);
+	}
+	
+	
 	private AdminRegistrationEntity getAdminRegEntity() {
 		AdminRegistrationEntity adminEntity = new AdminRegistrationEntity
 				                             .AdminRegEntityBuilder()

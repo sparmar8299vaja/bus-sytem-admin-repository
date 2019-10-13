@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sp.admin.commons.DateFormatterClass;
 import com.sp.admin.dtos.BusRegistrationDto;
 import com.sp.admin.exceptions.InputValidationFailedException;
 import com.sp.admin.service.BusRegistrationService;
@@ -41,9 +42,9 @@ public class BusRegistrationController {
 	}
 
 	private void validateBusDto(final BusRegistrationDto registrationDto) {
-		Date dateOfLeave = registrationDto.getDateOfLeave();
-		Date dateOfReach = registrationDto.getDateOfReach();
-		Date date=new Date(System.currentTimeMillis());
+		String dateOfLeave = registrationDto.getDateOfLeave();
+		String dateOfReach = registrationDto.getDateOfReach();
+		String date = DateFormatterClass.getFormattedDate(new Date(System.currentTimeMillis()));
 		if(dateOfLeave.compareTo(date) < 0) {
 			throw new InputValidationFailedException("invailid leave date");
 		}

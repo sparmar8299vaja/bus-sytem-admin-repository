@@ -1,7 +1,6 @@
 package com.sp.admin.dtos;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -46,9 +45,11 @@ public class BusRegistrationDto implements Serializable {
 	@Size(max = 12,min = 10,message = "Brand Mobile Number Must Contains Minimum 10 Or Maximum 12 Digits With Contry Code")
 	private String brandMobileNo;
 	@NotNull(message = "Bad Request Date Of Leave Must Not Be Null")
-	private Date dateOfLeave;
+	@NotBlank(message = "Bad Request Date Of Leave Must Not Be Empty")
+	private String dateOfLeave;
 	@NotNull(message = "Bad Request Date Of Reach Must Not Be Null")
-	private Date dateOfReach;
+	@NotBlank(message = "Bad Request Date Of Reach Must Not Be Empty")
+	private String dateOfReach;
 	@NotNull(message = "Bad Request Brand MailId Must Not Be Null")
 	@NotBlank(message = "Bad Request Brand MailId Must Not Be Empty")
 	private String brandMailId;
@@ -58,6 +59,18 @@ public class BusRegistrationDto implements Serializable {
 	private Set<@NotNull(message = "Bad Request Dropping Point Must Not Be Null") DroppingPointDto> droppingPointDtos;
 	@NotNull(message = "Bad Request BoardingPoin Point List Must Not Be Null")
 	private Set<@NotNull(message = "Bad Request BoardingPoin Point Must Not Be Null") BoardingPointDto> boardingPointDtos;
+	@NotNull(message = "Bad Request start location Must Not Be Null")
+	@NotBlank(message = "Bad Request start location Must Not Be Empty")
+	private String startLoc;
+	@NotNull(message = "Bad Request end location Must Not Be Null")
+	@NotBlank(message = "Bad Request end location Must Not Be Empty")
+	private String endLoc;
+	@NotNull(message = "Bad Request start time Must Not Be Null")
+	@NotBlank(message = "Bad Request start time Must Not Be Empty")
+	private String leaveTime;
+	@NotNull(message = "Bad Request end time Must Not Be Null")
+	@NotBlank(message = "Bad Request end time Must Not Be Empty")
+	private String reachTime;
 	
 	public BusRegistrationDto() {
 		super();
@@ -80,6 +93,10 @@ public class BusRegistrationDto implements Serializable {
 		this.fare = builder.fare;
 		this.droppingPointDtos = builder.droppingPointDtos;
 		this.boardingPointDtos = builder.boardingPointDtos;
+		this.startLoc = builder.startLoc;
+		this.endLoc = builder.endLoc;
+		this.leaveTime = builder.leaveTime;
+		this.reachTime = builder.reachTime;
 	}
 	
 
@@ -123,11 +140,11 @@ public class BusRegistrationDto implements Serializable {
 		return brandMobileNo;
 	}
 
-	public Date getDateOfLeave() {
+	public String getDateOfLeave() {
 		return dateOfLeave;
 	}
 
-	public Date getDateOfReach() {
+	public String getDateOfReach() {
 		return dateOfReach;
 	}
 
@@ -151,6 +168,22 @@ public class BusRegistrationDto implements Serializable {
 		return boardingPointDtos;
 	}
 
+	public String getStartLoc() {
+		return startLoc;
+	}
+
+	public String getEndLoc() {
+		return endLoc;
+	}
+
+	public String getLeaveTime() {
+		return leaveTime;
+	}
+
+	public String getReachTime() {
+		return reachTime;
+	}
+
 	public static class BusRegistrationDtoBuilder{
 		private String busNo;
 		private String brandName;
@@ -162,76 +195,96 @@ public class BusRegistrationDto implements Serializable {
 		private String driverName;
 		private String driverMobileNo;
 		private String brandMobileNo;
-		private Date dateOfLeave;
-		private Date dateOfReach;
+		private String dateOfLeave;
+		private String dateOfReach;
 		private String brandMailId;
 		private int fare;
 		private Set<DroppingPointDto> droppingPointDtos;
 		private Set<BoardingPointDto> boardingPointDtos;
+		private String startLoc;
+		private String endLoc;
+		private String leaveTime;
+		private String reachTime;
 		
-		public BusRegistrationDtoBuilder setBusNo(String busNo) {
+		public BusRegistrationDtoBuilder setBusNo(final String busNo) {
 			this.busNo = busNo;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setBrandName(String brandName) {
+		public BusRegistrationDtoBuilder setBrandName(final String brandName) {
 			this.brandName = brandName;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setFromLocation(String fromLocation) {
+		public BusRegistrationDtoBuilder setFromLocation(final String fromLocation) {
 			this.fromLocation = fromLocation;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setToLocation(String toLocation) {
+		public BusRegistrationDtoBuilder setToLocation(final String toLocation) {
 			this.toLocation = toLocation;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setNoOfSeat(int noOfSeat) {
+		public BusRegistrationDtoBuilder setNoOfSeat(final int noOfSeat) {
 			this.noOfSeat = noOfSeat;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setTypeOfSeat(String typeOfSeat) {
+		public BusRegistrationDtoBuilder setTypeOfSeat(final String typeOfSeat) {
 			this.typeOfSeat = typeOfSeat;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setTypeOfBus(String typeOfBus) {
+		public BusRegistrationDtoBuilder setTypeOfBus(final String typeOfBus) {
 			this.typeOfBus = typeOfBus;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setDriverName(String driverName) {
+		public BusRegistrationDtoBuilder setDriverName(final String driverName) {
 			this.driverName = driverName;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setDriverMobileNo(String driverMobileNo) {
+		public BusRegistrationDtoBuilder setDriverMobileNo(final String driverMobileNo) {
 			this.driverMobileNo = driverMobileNo;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setBrandMobileNo(String brandMobileNo) {
+		public BusRegistrationDtoBuilder setBrandMobileNo(final String brandMobileNo) {
 			this.brandMobileNo = brandMobileNo;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setDateOfLeave(Date dateOfLeave) {
+		public BusRegistrationDtoBuilder setDateOfLeave(final String dateOfLeave) {
 			this.dateOfLeave = dateOfLeave;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setDateOfReach(Date dateOfReach) {
+		public BusRegistrationDtoBuilder setDateOfReach(final String dateOfReach) {
 			this.dateOfReach = dateOfReach;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setBrandMailId(String brandMailId) {
+		public BusRegistrationDtoBuilder setBrandMailId(final String brandMailId) {
 			this.brandMailId = brandMailId;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setFare(int fare) {
+		public BusRegistrationDtoBuilder setFare(final int fare) {
 			this.fare = fare;
 			return this;
 		}
 		
-		public BusRegistrationDtoBuilder setDroppingPointDtos(Set<DroppingPointDto> droppingPointDtos) {
+		public BusRegistrationDtoBuilder setDroppingPointDtos(final Set<DroppingPointDto> droppingPointDtos) {
 			this.droppingPointDtos = droppingPointDtos;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setBoardingPointDtos(Set<BoardingPointDto> boardingPointDtos) {
+		public BusRegistrationDtoBuilder setBoardingPointDtos(final Set<BoardingPointDto> boardingPointDtos) {
 			this.boardingPointDtos = boardingPointDtos;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setStartLoc(final String startLoc) {
+			this.startLoc = startLoc;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setEndLoc(final String endLoc) {
+			this.endLoc = endLoc;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setLeaveTime(final String leaveTime) {
+			this.leaveTime = leaveTime;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setReachTime(final String reachTime) {
+			this.reachTime = reachTime;
 			return this;
 		}
 		public BusRegistrationDto build() {
