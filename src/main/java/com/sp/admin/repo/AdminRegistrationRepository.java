@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.sp.admin.entity.AdminRegistrationEntity;
 
-public interface AdminRegistrationRepository extends JpaRepository<AdminRegistrationEntity, Integer> {
+public interface AdminRegistrationRepository extends JpaRepository<AdminRegistrationEntity, Integer>{
      
 	public Optional<AdminRegistrationEntity> findByName(final String name);
 }

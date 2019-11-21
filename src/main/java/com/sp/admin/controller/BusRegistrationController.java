@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.commons.DateFormatterClass;
 import com.sp.admin.dtos.BusRegistrationDto;
+import com.sp.admin.dtos.SeatDto;
 import com.sp.admin.exceptions.InputValidationFailedException;
 import com.sp.admin.service.BusRegistrationService;
 
@@ -28,6 +29,7 @@ public class BusRegistrationController {
 	@PostMapping(value = "/addbus")
 	public String registerBus(@Valid @RequestBody final BusRegistrationDto registrationDto) {
 		validateBusDto(registrationDto);
+		prepareSeatList(registrationDto);
 		return busRegistrationService.addBusInfo(registrationDto);
 	}
 
@@ -42,20 +44,35 @@ public class BusRegistrationController {
 	}
 
 	private void validateBusDto(final BusRegistrationDto registrationDto) {
-		String dateOfLeave = registrationDto.getDateOfLeave();
-		String dateOfReach = registrationDto.getDateOfReach();
-		String date = DateFormatterClass.getFormattedDate(new Date(System.currentTimeMillis()));
-		if(dateOfLeave.compareTo(date) < 0) {
-			throw new InputValidationFailedException("invailid leave date");
-		}
-		if (dateOfLeave.equals(dateOfReach)
-				|| dateOfLeave.compareTo(dateOfReach) > 0) {
+		Date currentDate = new Date(System.currentTimeMillis());
+		Date dateOfLeave = DateFormatterClass.getDate(registrationDto.getDateOfLeave(), registrationDto.getLeaveTime());
+		Date dateOfReach = DateFormatterClass.getDate(registrationDto.getDateOfReach(), registrationDto.getReachTime());
+		if(dateOfLeave.compareTo(dateOfReach)  >= 0) {
 			throw new InputValidationFailedException(
 					"leave and reach date or time must not be same or leave date not greater than reach date");
+		}
+		if (dateOfLeave.compareTo(currentDate) <= 0) {
+			throw new InputValidationFailedException("leave date or time must greater than today date or time");
 		}
 		if (!registrationDto.getBrandMailId().contains("@")) {
 			throw new InputValidationFailedException("email id must contains @");
 		}
 	}
-
+	
+	private void prepareSeatList(final BusRegistrationDto registrationDto) {
+		for(int i=1;i<=registrationDto.getNoOfLowerSeat();i++) {
+			registrationDto.getSeatDto().add(new SeatDto
+					.SeatDtoBuilder()
+					.setAvailable(true)
+					.setSeatNo(i)
+					.setSeatType("lower").build());
+		}
+		for(int i=registrationDto.getNoOfLowerSeat()+1;i<=registrationDto.getNoOfSeat();i++) {
+			registrationDto.getSeatDto().add(new SeatDto
+					.SeatDtoBuilder()
+					.setAvailable(true)
+					.setSeatNo(i)
+					.setSeatType("upper").build());
+		}
+	}
 }

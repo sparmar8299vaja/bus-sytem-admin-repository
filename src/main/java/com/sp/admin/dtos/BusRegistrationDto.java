@@ -26,10 +26,11 @@ public class BusRegistrationDto implements Serializable {
 	@NotBlank(message = "Bad Request To Location Must Not Be Empty")
 	private String toLocation;
 	@NotNull(message = "Bad Request No Of Seat Must Not Be Null")
-	private int noOfSeat;
-	@NotNull(message = "Bad Request Type Of Seat Must Not Be Null")
-	@NotBlank(message = "Bad Request Type Of Seat Must Not Be Empty")
-	private String typeOfSeat;
+	private Integer noOfSeat;
+	@NotNull(message = "Bad Request No Of Lower Seat Must Not Be Null")
+	private Integer noOfLowerSeat;
+	@NotNull(message = "Bad Request No Of Upper Seat Must Not Be Null")
+	private Integer noOfUpperSeat;
 	@NotNull(message = "Bad Request Type Of Bus Must Not Be Null")
 	@NotBlank(message = "Bad Request Type Of Bus Must Not Be Empty")
 	private String typeOfBus;
@@ -57,9 +58,12 @@ public class BusRegistrationDto implements Serializable {
 	private Integer fare; 
 	@NotNull(message = "Bad Request Dropping Point List Must Not Be Null")
 	private Set<@NotNull(message = "Bad Request Dropping Point Must Not Be Null") DroppingPointDto> droppingPointDtos;
-	@NotNull(message = "Bad Request BoardingPoin Point List Must Not Be Null")
-	private Set<@NotNull(message = "Bad Request BoardingPoin Point Must Not Be Null") BoardingPointDto> boardingPointDtos;
-	@NotNull(message = "Bad Request start location Must Not Be Null")
+	@NotNull(message = "Bad Request BoardingPoint Point List Must Not Be Null")
+	private Set<@NotNull(message = "Bad Request BoardingPoint Point Must Not Be Null") BoardingPointDto> boardingPointDtos;
+	@NotNull(message = "Bad Request Seat List Must Not Be Null")
+	private Set<@NotNull(message = "Bad Request Seat Must Not Be Null") SeatDto> seatDto;
+	@NotNull(message = "Bad Requestoot"
+			+ " start location Must Not Be Null")
 	@NotBlank(message = "Bad Request start location Must Not Be Empty")
 	private String startLoc;
 	@NotNull(message = "Bad Request end location Must Not Be Null")
@@ -83,7 +87,6 @@ public class BusRegistrationDto implements Serializable {
 		this.toLocation = builder.toLocation;
 		this.noOfSeat = builder.noOfSeat;
 		this.typeOfBus = builder.typeOfBus;
-		this.typeOfSeat = builder.typeOfSeat;
 		this.driverName = builder.driverName;
 		this.driverMobileNo = builder.driverMobileNo;
 		this.brandMobileNo = builder.brandMobileNo;
@@ -97,6 +100,9 @@ public class BusRegistrationDto implements Serializable {
 		this.endLoc = builder.endLoc;
 		this.leaveTime = builder.leaveTime;
 		this.reachTime = builder.reachTime;
+		this.noOfLowerSeat = builder.noOfLowerSeat;
+		this.noOfUpperSeat = builder.noOfUpperSeat;
+		this.seatDto = builder.seatDto;
 	}
 	
 
@@ -118,10 +124,6 @@ public class BusRegistrationDto implements Serializable {
 
 	public int getNoOfSeat() {
 		return noOfSeat;
-	}
-
-	public String getTypeOfSeat() {
-		return typeOfSeat;
 	}
 
 	public String getTypeOfBus() {
@@ -184,13 +186,24 @@ public class BusRegistrationDto implements Serializable {
 		return reachTime;
 	}
 
+	public Integer getNoOfLowerSeat() {
+		return noOfLowerSeat;
+	}
+
+	public Integer getNoOfUpperSeat() {
+		return noOfUpperSeat;
+	}
+
+	public Set<SeatDto> getSeatDto() {
+		return seatDto;
+	}
+
 	public static class BusRegistrationDtoBuilder{
 		private String busNo;
 		private String brandName;
 		private String fromLocation;
 		private String toLocation;
 		private int noOfSeat;
-		private String typeOfSeat;
 		private String typeOfBus;
 		private String driverName;
 		private String driverMobileNo;
@@ -205,6 +218,9 @@ public class BusRegistrationDto implements Serializable {
 		private String endLoc;
 		private String leaveTime;
 		private String reachTime;
+		private Integer noOfLowerSeat;
+		private Integer noOfUpperSeat;
+		private Set<SeatDto> seatDto;
 		
 		public BusRegistrationDtoBuilder setBusNo(final String busNo) {
 			this.busNo = busNo;
@@ -224,10 +240,6 @@ public class BusRegistrationDto implements Serializable {
 		}
 		public BusRegistrationDtoBuilder setNoOfSeat(final int noOfSeat) {
 			this.noOfSeat = noOfSeat;
-			return this;
-		}
-		public BusRegistrationDtoBuilder setTypeOfSeat(final String typeOfSeat) {
-			this.typeOfSeat = typeOfSeat;
 			return this;
 		}
 		public BusRegistrationDtoBuilder setTypeOfBus(final String typeOfBus) {
@@ -285,6 +297,18 @@ public class BusRegistrationDto implements Serializable {
 		}
 		public BusRegistrationDtoBuilder setReachTime(final String reachTime) {
 			this.reachTime = reachTime;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setNoOfLowerSeat(final Integer noOfLowerSeat) {
+			this.noOfLowerSeat = noOfLowerSeat;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setNoOfUpperSeat(final Integer noOfUpperSeat) {
+			this.noOfUpperSeat = noOfUpperSeat;
+			return this;
+		}
+		public BusRegistrationDtoBuilder setSeatDto(final Set<SeatDto> seatDto) {
+			this.seatDto = seatDto;
 			return this;
 		}
 		public BusRegistrationDto build() {

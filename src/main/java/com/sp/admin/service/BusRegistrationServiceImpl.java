@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.sp.admin.commons.SMSSenderCommons;
 import com.sp.admin.dtos.BusRegistrationDto;
 import com.sp.admin.entity.BusRegistrationEntity;
+import com.sp.admin.entity.BusRegistrationEntityId;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.BusRegistrationRepository;
@@ -21,20 +21,18 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 	@Resource
 	private BusRegistrationRepository busRegistrationRepository;
 
-	@Resource
-	private SMSSenderCommons sender;
-
 	@Override
 	public String addBusInfo(final BusRegistrationDto registrationDto) {
 		String result = null;
 		BusRegistrationEntity busRegEntity = BusRegistrationEntity.convertDtoToEntity(registrationDto);
-		if (busRegistrationRepository.existsById(busRegEntity.getBusNo()))
+		BusRegistrationEntityId busId = busRegEntity.getBusId();
+		if (busRegistrationRepository.existsByBusIdBusNoAndBusIdDateOfLeave(busId.getBusNo(), busId.getDateOfLeave()))
 			throw new ConstraintsVoilationException("Bus No Already Exist");
 		try {
-			result = busRegistrationRepository.save(busRegEntity).getBusNo();
+			result = busRegistrationRepository.save(busRegEntity).getBusId().getBusNo();
 
 			/*
-			 * sender.sendMessage(registrationDto.getBrandMobileNo(),
+			 * SMSSenderCommons.sendMessage(registrationDto.getBrandMobileNo(),
 			 * "congratulations your bus addded for date" + " " +
 			 * registrationDto.getDateOfLeave() + " from " +
 			 * registrationDto.getFromLocation() + " to " + registrationDto.getToLocation()

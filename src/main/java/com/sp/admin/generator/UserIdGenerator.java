@@ -19,7 +19,8 @@ public class UserIdGenerator implements IdentifierGenerator {
 		Connection connection = null;
 		int startId = 567890;
 		connection = session.connection();
-		try(PreparedStatement prepareStatement = connection.prepareStatement(SQLQuery.USER_REG_ID); ResultSet rs = prepareStatement.executeQuery()) {
+		try(PreparedStatement prepareStatement = connection.prepareStatement(SQLQuery.USER_REG_ID); 
+			ResultSet rs = prepareStatement.executeQuery()) {
 			rs.next();
 			int id = rs.getInt(1);
 			if (id == 0) {

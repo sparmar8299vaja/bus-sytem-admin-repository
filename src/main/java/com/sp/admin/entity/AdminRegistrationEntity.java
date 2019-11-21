@@ -21,6 +21,7 @@ public class AdminRegistrationEntity extends UserRegistrationEntity {
 
 	public static class AdminRegEntityBuilder extends UserRegistrationEntity.UserRegistrationEntityBuilder<AdminRegEntityBuilder>{
 	
+		@Override
 		public AdminRegistrationEntity build() {
 			return new AdminRegistrationEntity(this);
 		}

@@ -25,4 +25,6 @@ public class BusBookingController {
 	public List<BusRegistrationDto> getBusInfo(@Valid @RequestBody final BusBookingRequestDto requestDto){
 		return service.getBusByFromLocToLocAndDate(requestDto);
 	}
+	
+	
 }

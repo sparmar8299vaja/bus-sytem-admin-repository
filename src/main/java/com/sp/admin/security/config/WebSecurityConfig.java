@@ -1,6 +1,7 @@
 package com.sp.admin.security.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,16 +24,16 @@ import com.sp.admin.commons.JwtRequestFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
+	@Resource
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-	@Autowired
+	@Resource
 	private UserDetailsService jwtUserDetailsService;
 
-	@Autowired
+	@Resource
 	private JwtRequestFilter jwtRequestFilter;
 
-	@Autowired
+	@Resource
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		// configure AuthenticationManager so that it knows from where to load
 		// user for matching credentials

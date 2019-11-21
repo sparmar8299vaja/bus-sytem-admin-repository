@@ -25,6 +25,7 @@ import com.sp.admin.dtos.BusRegistrationDto;
 import com.sp.admin.dtos.DroppingPointDto;
 import com.sp.admin.entity.BoardingPointEntity;
 import com.sp.admin.entity.BusRegistrationEntity;
+import com.sp.admin.entity.BusRegistrationEntityId;
 import com.sp.admin.entity.DroppingPointEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
@@ -42,6 +43,8 @@ public class BusRegistrationServiceImplTest {
 	private static final String DROPPING_POINT_DTO  = "TEEN HATH NAKA";
 	private static final String RESPONSE_MSG = "Bus Added Successfully have no "+BUS_NO;
 	private static final Boolean BUSALREADY_EXIST = true;
+	private static final String DATE_OF_LEAVE = "10-10-2019";
+	
 	@InjectMocks
 	private BusRegistrationService busRegistrationService = new BusRegistrationServiceImpl();
 	
@@ -91,9 +94,16 @@ public class BusRegistrationServiceImplTest {
 	
 	private BusRegistrationEntity getBusRegEntity() {
 		return new BusRegistrationEntity.BusRegistrationEntityBuilder()
-				.setBusNo(BUS_NO)
+				.setBusId(getBusRegDtoId())
 				.setBoardingPointEntity(new HashSet<BoardingPointEntity>(Arrays.asList(getBoardingPointEntity())))
 				.setDroppingPointEntity(new HashSet<DroppingPointEntity>(Arrays.asList(getDroppingPointEntity())))
+				.build();
+	}
+	
+	private BusRegistrationEntityId getBusRegDtoId() {
+		return new BusRegistrationEntityId.BusRegistrationEntityIdBuilder()
+				.setBusNo(BUS_NO)
+				.setDateOfLeave(DATE_OF_LEAVE)
 				.build();
 	}
 	

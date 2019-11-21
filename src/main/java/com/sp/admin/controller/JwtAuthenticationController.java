@@ -1,11 +1,11 @@
 package com.sp.admin.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,25 +20,26 @@ import com.sp.admin.exceptions.UsernamePasswordInvailidException;
 @RequestMapping(value = "/authenticate/v1")
 public class JwtAuthenticationController {
 
-	@Autowired
+	@Resource
 	private AuthenticationManager authenticationManager;
 
-	@Autowired
+	@Resource
 	private UserDetailsService jwtInMemoryUserDetailsService;
+	
+	@Resource
+	private JwtTokenUtil jwtTokenUtil;
 
 	@PostMapping(value = "/createtocken")
-	public String createAuthenticationToken(@RequestBody UserAuthenticationDto authenticationRequest) throws Exception {
+	public String createAuthenticationToken(@RequestBody final UserAuthenticationDto authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getName(), authenticationRequest.getPassword());
 
-		final UserDetails userDetails = jwtInMemoryUserDetailsService
-				.loadUserByUsername(authenticationRequest.getName());
-
-		return JwtTokenUtil.generateToken(userDetails);
+		return jwtTokenUtil.generateToken(jwtInMemoryUserDetailsService
+				.loadUserByUsername(authenticationRequest.getName()));
 
 	}
 
-	private void authenticate(String username, String password) throws Exception {
+	private void authenticate(final String username, final String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException | BadCredentialsException e) {
