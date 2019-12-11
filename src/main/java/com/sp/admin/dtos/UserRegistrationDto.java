@@ -16,7 +16,7 @@ public class UserRegistrationDto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
-	private Integer id;
+	private int id;
 	@NotNull(message = "Bad Request Name Must Not Be Null")
 	@NotBlank(message = "Bad Request Name Must Not Be Empty")
 	private String name;
@@ -106,11 +106,11 @@ public class UserRegistrationDto implements Serializable{
 	}
 
 	//this gettter setter methods used for testing only
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 }

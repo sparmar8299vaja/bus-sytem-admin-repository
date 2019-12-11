@@ -33,9 +33,8 @@ public class DateFormatterClass {
 		Calendar cal = getCalInstance();
 		cal.setTime(convertStringToDate(date));
 		String[] splitHoursAndSecond = time.split(":");
-		String[] splitMinutesAmPm = splitHoursAndSecond[1].split(" ");
 		cal.set(Calendar.HOUR_OF_DAY, getFormattedTime(splitHoursAndSecond[0]));
-		cal.set(Calendar.MINUTE, getFormattedTime(splitMinutesAmPm[0]));
+		cal.set(Calendar.MINUTE, getFormattedTime(splitHoursAndSecond[1]));
 		return cal.getTime();
 	}
 

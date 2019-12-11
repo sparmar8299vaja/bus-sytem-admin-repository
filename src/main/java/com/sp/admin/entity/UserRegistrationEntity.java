@@ -103,8 +103,10 @@ public class UserRegistrationEntity {
 		}
 	}
 	
+	
+	
 	//this gettter setter methods used for testing only
-		public void setId(Integer id) {
+		public void setId(int id) {
 			this.id = id;
 		}
 }

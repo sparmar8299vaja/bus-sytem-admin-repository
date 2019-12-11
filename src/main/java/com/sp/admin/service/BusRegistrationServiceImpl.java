@@ -1,7 +1,6 @@
 package com.sp.admin.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -38,10 +37,11 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 			 * registrationDto.getFromLocation() + " to " + registrationDto.getToLocation()
 			 * + " successfully on mybus ");
 			 */
+			 
 		} catch (Exception e) {
-			throw new ConstraintsVoilationException("Driver Mobile No Already Exist", e);
+			throw new ConstraintsVoilationException("Problem While Registring Bus Please Check Details One", e);
 		}
-		return "Bus Added Successfully have no "+result;
+		return "Bus Added Successfully Having No "+result;
 	}
 
 	@Override
@@ -52,14 +52,4 @@ public class BusRegistrationServiceImpl implements BusRegistrationService {
 		}
 		return 	busList.stream().map(BusRegistrationEntity::convertEntityToDto).collect(Collectors.toList());
 	}
-
-	@Override
-	public BusRegistrationDto getBusById(final String busNo) {
-		Optional<BusRegistrationEntity> busInfo = busRegistrationRepository.findById(busNo);
-		if(!busInfo.isPresent()) {
-			throw new DataNotFoundException("bus not exist in data base with specified number");
-		} 
-		return BusRegistrationEntity.convertEntityToDto(busInfo.get());
-	}
-
 }

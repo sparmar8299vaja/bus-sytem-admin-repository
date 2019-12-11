@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,11 +35,6 @@ public class BusRegistrationController {
 	@GetMapping(value = "/showbuslist")
 	public List<BusRegistrationDto> showBusList() {
 		return busRegistrationService.getAllBusInfo();
-	}
-
-	@GetMapping(value = "/busbyid/{busNo}")
-	public BusRegistrationDto getBusById(@PathVariable final String busNo) {
-		return busRegistrationService.getBusById(busNo);
 	}
 
 	private void validateBusDto(final BusRegistrationDto registrationDto) {

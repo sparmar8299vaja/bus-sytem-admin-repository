@@ -2,8 +2,11 @@ package com.sp.admin.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.sp.admin.dtos.SeatDto;
 
@@ -12,6 +15,10 @@ import com.sp.admin.dtos.SeatDto;
 public class SeatEntity {
 
 	@Id
+	@Column(name = "seat_id")
+	@GenericGenerator(name = "SEAT_GEN", strategy = "increment")
+	@GeneratedValue(generator = "SEAT_GEN")
+	private int seatId;
 	@Column(name = "seat_no")
 	private int seatNo;
 	@Column(name = "seat_type")
@@ -24,12 +31,13 @@ public class SeatEntity {
 	}
 	
 	public SeatEntity(final SeatEntityBuilder builder) {
+		this.seatId = builder.seatId;
 		this.seatNo = builder.seatNo;
 		this.seatType = builder.seatType;
 		this.available = builder.available;
 	}
 	
-	public Integer getSeatNo() {
+	public int getSeatNo() {
 		return seatNo;
 	}
 
@@ -41,8 +49,13 @@ public class SeatEntity {
 		return available;
 	}
 
+	public int getSeatId() {
+		return seatId;
+	}
+
 	public static class SeatEntityBuilder{
 		
+		private int seatId;
 		private int seatNo;
 		private String seatType;
 		private boolean available;
@@ -59,6 +72,11 @@ public class SeatEntity {
 		
 		public SeatEntityBuilder setAvailable(final boolean available) {
 			this.available = available;
+			return this;
+		}
+
+		public SeatEntityBuilder setSeatId(final int seatId) {
+			this.seatId = seatId;
 			return this;
 		}
 

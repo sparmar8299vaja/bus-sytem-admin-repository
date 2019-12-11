@@ -17,7 +17,7 @@ import com.sp.admin.service.AdminRegistrationService;
 
 @RestController
 @RequestMapping(value = "/registration/v1")
-public class AdminRegistrationController {
+public class AdminRegistrationController{
 
 	@Resource
 	private AdminRegistrationService registrationService;

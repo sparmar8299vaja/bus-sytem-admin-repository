@@ -25,12 +25,9 @@ public class BusRegistrationDto implements Serializable {
 	@NotNull(message = "Bad Request To Location Must Not Be Null")
 	@NotBlank(message = "Bad Request To Location Must Not Be Empty")
 	private String toLocation;
-	@NotNull(message = "Bad Request No Of Seat Must Not Be Null")
-	private Integer noOfSeat;
-	@NotNull(message = "Bad Request No Of Lower Seat Must Not Be Null")
-	private Integer noOfLowerSeat;
-	@NotNull(message = "Bad Request No Of Upper Seat Must Not Be Null")
-	private Integer noOfUpperSeat;
+	private int noOfSeat;	@NotNull(message = "Bad Request No Of Lower Seat Must Not Be Null")
+	private int noOfLowerSeat;
+	private int noOfUpperSeat;
 	@NotNull(message = "Bad Request Type Of Bus Must Not Be Null")
 	@NotBlank(message = "Bad Request Type Of Bus Must Not Be Empty")
 	private String typeOfBus;
@@ -55,7 +52,7 @@ public class BusRegistrationDto implements Serializable {
 	@NotBlank(message = "Bad Request Brand MailId Must Not Be Empty")
 	private String brandMailId;
 	@NotNull(message = "Bad Request Fare Must Not Be Null")
-	private Integer fare; 
+	private int fare; 
 	@NotNull(message = "Bad Request Dropping Point List Must Not Be Null")
 	private Set<@NotNull(message = "Bad Request Dropping Point Must Not Be Null") DroppingPointDto> droppingPointDtos;
 	@NotNull(message = "Bad Request BoardingPoint Point List Must Not Be Null")
@@ -186,11 +183,11 @@ public class BusRegistrationDto implements Serializable {
 		return reachTime;
 	}
 
-	public Integer getNoOfLowerSeat() {
+	public int getNoOfLowerSeat() {
 		return noOfLowerSeat;
 	}
 
-	public Integer getNoOfUpperSeat() {
+	public int getNoOfUpperSeat() {
 		return noOfUpperSeat;
 	}
 
@@ -218,8 +215,8 @@ public class BusRegistrationDto implements Serializable {
 		private String endLoc;
 		private String leaveTime;
 		private String reachTime;
-		private Integer noOfLowerSeat;
-		private Integer noOfUpperSeat;
+		private int noOfLowerSeat;
+		private int noOfUpperSeat;
 		private Set<SeatDto> seatDto;
 		
 		public BusRegistrationDtoBuilder setBusNo(final String busNo) {
@@ -299,11 +296,11 @@ public class BusRegistrationDto implements Serializable {
 			this.reachTime = reachTime;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setNoOfLowerSeat(final Integer noOfLowerSeat) {
+		public BusRegistrationDtoBuilder setNoOfLowerSeat(final int noOfLowerSeat) {
 			this.noOfLowerSeat = noOfLowerSeat;
 			return this;
 		}
-		public BusRegistrationDtoBuilder setNoOfUpperSeat(final Integer noOfUpperSeat) {
+		public BusRegistrationDtoBuilder setNoOfUpperSeat(final int noOfUpperSeat) {
 			this.noOfUpperSeat = noOfUpperSeat;
 			return this;
 		}
