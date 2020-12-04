@@ -6,16 +6,19 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.sp.admin.dtos.AdminRegistrationDto;
+import com.sp.admin.dtos.UserRegistrationDto;
 import com.sp.admin.entity.AdminRegistrationEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
 
 @Service
-public class AdminRegistrationServiceImpl implements AdminRegistrationService {
+@Qualifier(value = "adminservice")
+public class AdminRegistrationServiceImpl implements UserRegistrationService {
 
 	@Resource
 	private AdminRegistrationRepository registrationRepository;
@@ -24,7 +27,7 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 	private EncryptDecryptService encryptDecryptService;
 
 	@Override
-	public String registerAdmin(final AdminRegistrationDto registrationDto) {
+	public String registerUser(final UserRegistrationDto registrationDto) {
 		Integer adminId = null;
 		try {
 			adminId = registrationRepository
@@ -46,7 +49,7 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 	}
 
 	@Override
-	public List<AdminRegistrationDto> getAllAdmin() {
+	public List<UserRegistrationDto> getAllUser() {
 		List<AdminRegistrationEntity> adminList = registrationRepository.findAll();
 		if (adminList.isEmpty()) {
 			throw new DataNotFoundException("Empty Data Set");
@@ -55,7 +58,7 @@ public class AdminRegistrationServiceImpl implements AdminRegistrationService {
 	}
 
 	@Override
-	public AdminRegistrationDto getAdminById(final int id) {
+	public UserRegistrationDto getUserById(final int id) {
 		Optional<AdminRegistrationEntity> adminEntity = registrationRepository.findById(id);
 		if (!adminEntity.isPresent()) {
 			throw new DataNotFoundException("required id based admin not present in data base");

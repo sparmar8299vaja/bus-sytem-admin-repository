@@ -8,7 +8,7 @@ import java.util.Date;
 import com.sp.admin.exceptions.DateFormateExeption;
 
 public class DateFormatterClass {
-	
+
 	private DateFormatterClass() {
 
 	}

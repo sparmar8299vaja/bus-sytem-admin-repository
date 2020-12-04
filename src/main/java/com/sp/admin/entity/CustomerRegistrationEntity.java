@@ -1,7 +1,14 @@
 package com.sp.admin.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import com.sp.admin.dtos.CustomerRegistrationDto;
 
+@Entity
+@Table(name = "CUST_REG")
+@PrimaryKeyJoinColumn(name = "ID")
 public class CustomerRegistrationEntity extends UserRegistrationEntity {
 
 	public CustomerRegistrationEntity() {
@@ -20,7 +27,7 @@ public class CustomerRegistrationEntity extends UserRegistrationEntity {
 		}
 	}
 	
-	public CustomerRegistrationEntity convertDtoToEntity(final CustomerRegistrationDto dto) {
+	public static CustomerRegistrationEntity convertDtoToEntity(final CustomerRegistrationDto dto) {
 		return new CustomerRegistrationEntity.CustomerRegistrationEntityBuilder()
 				   .setGender(dto.getGender())
 				   .setMailId(dto.getMailId())
@@ -30,7 +37,7 @@ public class CustomerRegistrationEntity extends UserRegistrationEntity {
 				   .build();
 	}
 	
-	public CustomerRegistrationDto convertEntityToDto(final CustomerRegistrationEntity entity) {
+	public static CustomerRegistrationDto convertEntityToDto(final CustomerRegistrationEntity entity) {
 		return new CustomerRegistrationDto.CustomerRegistrationDtoBuilder()
 				   .setGender(entity.getGender())
 				   .setMailId(entity.getMailId())

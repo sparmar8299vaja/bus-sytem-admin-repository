@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sp.admin.dtos.AdminRegistrationDto;
+import com.sp.admin.dtos.CustomerRegistrationDto;
 import com.sp.admin.dtos.UserRegistrationDto;
 import com.sp.admin.service.UserRegistrationService;
 
 @RestController
-@RequestMapping(value = "/registration/admin/v1")
-public class AdminRegistrationController{
+@RequestMapping(value = "/registration/cust/v1")
+public class CustomerRegistrationController {
 
 	@Resource
-	@Qualifier(value = "adminservice")
+	@Qualifier(value = "custservice")
 	private UserRegistrationService registrationService;
 
-	@PostMapping(value = "/registeradmin")
-	public String registerAdmin(@Valid @RequestBody final AdminRegistrationDto registrationDto) {
+	@PostMapping(value = "/registercust")
+	public String registerCustomer(@Valid @RequestBody final CustomerRegistrationDto registrationDto) {
 		return registrationService.registerUser(registrationDto);
 	}
       
-	@GetMapping(value = "/showadminlist")
-	public List<UserRegistrationDto> showAllAdmin() {
+	@GetMapping(value = "/showcustlist")
+	public List<UserRegistrationDto> showAllCustomer() {
 		return registrationService.getAllUser();
 	}
 
-	@GetMapping(value = "/showadmin/{id}")
+	@GetMapping(value = "/showcust/{id}")
 	public UserRegistrationDto showSingleAdmin(@PathVariable final int id) {
 		return registrationService.getUserById(id);
 	}

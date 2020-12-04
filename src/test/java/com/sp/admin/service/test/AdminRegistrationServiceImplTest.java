@@ -23,9 +23,9 @@ import com.sp.admin.entity.AdminRegistrationEntity;
 import com.sp.admin.exceptions.ConstraintsVoilationException;
 import com.sp.admin.exceptions.DataNotFoundException;
 import com.sp.admin.repo.AdminRegistrationRepository;
-import com.sp.admin.service.AdminRegistrationService;
 import com.sp.admin.service.AdminRegistrationServiceImpl;
 import com.sp.admin.service.EncryptDecryptService;
+import com.sp.admin.service.UserRegistrationService;
 
 @RunWith(MockitoJUnitRunner.Silent.class) 
 public class AdminRegistrationServiceImplTest {
@@ -36,7 +36,7 @@ public class AdminRegistrationServiceImplTest {
 	private static final String MOBILE_NO = "8839511184";
 
 	@InjectMocks
-	private AdminRegistrationService adminRegistrationService = new AdminRegistrationServiceImpl();
+	private UserRegistrationService adminRegistrationService = new AdminRegistrationServiceImpl();
 
 	@Mock
 	private AdminRegistrationRepository regRepository;
@@ -51,7 +51,7 @@ public class AdminRegistrationServiceImplTest {
 		when(regRepository.save(any(AdminRegistrationEntity.class)))
 		                 .thenReturn(adminRegEntity);
 		when(encDecService.encrypt(Mockito.anyString(),Mockito.anyString())).thenReturn(PASSWORD);
-		assertEquals("admin registered successfully having id "+ ADMIN_ID, adminRegistrationService.registerAdmin(adminRegDto));
+		assertEquals("admin registered successfully having id "+ ADMIN_ID, adminRegistrationService.registerUser(adminRegDto));
 	}
 
 	@Test(expected = ConstraintsVoilationException.class)
@@ -60,21 +60,21 @@ public class AdminRegistrationServiceImplTest {
 		AdminRegistrationEntity adminEntity = new AdminRegistrationEntity();
 		when(regRepository.save(any(AdminRegistrationEntity.class))).thenReturn(adminEntity);
 		when(encDecService.encrypt(Mockito.anyString(),Mockito.anyString())).thenReturn(PASSWORD);
-		adminRegistrationService.registerAdmin(adminDto);
+		adminRegistrationService.registerUser(adminDto);
 	}
 	
 	@Test
 	public void getAllAdminTest(){
 		when(regRepository.findAll()).thenReturn(Arrays.asList(getAdminRegEntity(),
 				getAdminRegEntity()));
-		adminRegistrationService.getAllAdmin();
+		adminRegistrationService.getAllUser();
 		verify(regRepository,times(1)).findAll();
 	}
 	
 	@Test(expected = DataNotFoundException.class)
 	public void geAllAdminThrowExceptionWhenDataNotExistTest(){
 		when(regRepository.findAll()).thenReturn(Collections.emptyList());
-		adminRegistrationService.getAllAdmin();
+		adminRegistrationService.getAllUser();
 		verify(regRepository,times(1)).findAll();
 	}
 	
@@ -82,14 +82,14 @@ public class AdminRegistrationServiceImplTest {
 	@Test
 	public void getAdminByIdTest(){
 		when(regRepository.findById(101)).thenReturn(Optional.of(getAdminRegEntity()));
-		adminRegistrationService.getAdminById(ADMIN_ID);
+		adminRegistrationService.getUserById(ADMIN_ID);
 		verify(regRepository,times(1)).findById(ADMIN_ID);
 	}
 	
 	@Test(expected = DataNotFoundException.class)
 	public void getAdminByIdThrowExceptionWhenDataNotExistTest() {
 		when(regRepository.findById(ADMIN_ID)).thenReturn(Optional.empty());
-		adminRegistrationService.getAdminById(ADMIN_ID);
+		adminRegistrationService.getUserById(ADMIN_ID);
 		verify(regRepository,times(1)).findById(ADMIN_ID);
 	}
 	
