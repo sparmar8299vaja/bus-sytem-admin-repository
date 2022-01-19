@@ -1,13 +1,18 @@
 package com.sp.admin.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +27,8 @@ import com.sp.admin.service.BusRegistrationService;
 @RequestMapping(value = "/registration/v1")
 public class BusRegistrationController {
 
+	private String baseUrl = "http://localhost:9090/registration/v1/";
+	
 	@Resource
 	private BusRegistrationService busRegistrationService;
 
@@ -35,6 +42,16 @@ public class BusRegistrationController {
 	@GetMapping(value = "/showbuslist")
 	public List<BusRegistrationDto> showBusList() {
 		return busRegistrationService.getAllBusInfo();
+	}
+	
+	@GetMapping(value = "/busNo/{busNo}")
+	public BusRegistrationDto showBusByBusNo(@PathVariable("busNo") final String busNo) {
+		return busRegistrationService.getBusByNo(busNo);
+	}
+	
+	@PutMapping(value = "/updateBusInfo")
+	public void updateBusInfo(@Valid @RequestBody BusRegistrationDto updateBusInfo, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		response.sendRedirect(baseUrl+"busNo/"+busRegistrationService.updateBusInfo(updateBusInfo));
 	}
 
 	private void validateBusDto(final BusRegistrationDto registrationDto) {

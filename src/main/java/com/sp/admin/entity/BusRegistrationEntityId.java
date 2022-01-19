@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import com.sp.admin.dtos.BusRegistrationIdDto;
+
 
 @Embeddable
 public class BusRegistrationEntityId implements Serializable{
@@ -54,5 +56,19 @@ public class BusRegistrationEntityId implements Serializable{
 			return new BusRegistrationEntityId(this);
 		}
 
+	}
+	
+	public static BusRegistrationEntityId convertDtoToEntity(final BusRegistrationIdDto dto) { 
+		return new BusRegistrationEntityId.BusRegistrationEntityIdBuilder()
+				.setBusNo(dto.getBusNo())
+				.setDateOfLeave(dto.getDateOfLeave())
+				.build();
+	}
+	
+	public static BusRegistrationIdDto convertDtoToEntity(final BusRegistrationEntityId entity) { 
+		return new BusRegistrationIdDto.BusRegistrationIdDtoBuilder()
+				.setBusNo(entity.getBusNo())
+				.setDateOfLeave(entity.getDateOfLeave())
+				.build();
 	}
 }

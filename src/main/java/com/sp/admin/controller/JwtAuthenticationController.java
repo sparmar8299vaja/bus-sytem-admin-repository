@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sp.admin.commons.JwtTokenUtil;
 import com.sp.admin.dtos.UserAuthenticationDto;
-import com.sp.admin.exceptions.UsernamePasswordInvailidException;
+import com.sp.admin.exceptions.InvailidDataException;
 
 @RestController
 @RequestMapping(value = "/authenticate/v1")
@@ -43,7 +43,7 @@ public class JwtAuthenticationController {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException | BadCredentialsException e) {
-			throw new UsernamePasswordInvailidException("USER_DISABLED_OR_INVAILID_CREDENTIAL", e);
+			throw new InvailidDataException("USER_DISABLED_OR_INVAILID_CREDENTIAL", e);
 		}
 	}
 }

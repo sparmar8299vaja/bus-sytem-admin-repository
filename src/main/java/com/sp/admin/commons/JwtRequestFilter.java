@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.sp.admin.exceptions.TockenExpirationException;
-import com.sp.admin.exceptions.UsernamePasswordInvailidException;
+import com.sp.admin.exceptions.InvailidDataException;
 import com.sp.admin.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -43,7 +43,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				throw new UsernamePasswordInvailidException("INVAILID USER NAME IN JWT TOCKEN", e);
+				throw new InvailidDataException("INVAILID USER NAME IN JWT TOCKEN", e);
 			} catch (ExpiredJwtException e) {
 				throw new TockenExpirationException("JWT TOCKEN EXPIRED", e);
 			}
