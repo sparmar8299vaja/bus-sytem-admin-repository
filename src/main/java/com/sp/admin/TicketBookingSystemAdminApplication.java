@@ -22,5 +22,6 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println(environment.getProperty("env"));
+		System.out.println(environment.getProperty("test"));
 	}
 }
