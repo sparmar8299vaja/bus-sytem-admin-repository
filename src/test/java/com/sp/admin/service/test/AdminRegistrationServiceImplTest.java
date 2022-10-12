@@ -46,6 +46,7 @@ public class AdminRegistrationServiceImplTest {
 
 	@Test
 	public void registerAdminTest() {
+		//test cases
 		AdminRegistrationEntity adminRegEntity = getAdminRegEntity();
 		AdminRegistrationDto adminRegDto = getAdminRegDto();
 		when(regRepository.save(any(AdminRegistrationEntity.class)))
