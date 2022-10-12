@@ -41,6 +41,7 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 	}
 	
 	public void testGetAPI() {
+		//PROMISE
 		String url = "http://localhost:9090/authenticate/v1/createtocken";
 		UserAuthenticationDto dto = new UserAuthenticationDto.UserDtoBuilder().setName("s12").setPassword("ancbdhas").build();
 		HttpHeaders headers = new HttpHeaders();
