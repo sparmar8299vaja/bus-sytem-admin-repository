@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sp.admin.dtos.SeatDto;
+
 
 @RestController
 @RequestMapping(value = "/test/v1")
@@ -21,8 +23,8 @@ public class TestController {
 	}
 	
 	@PostMapping(value = "/map")
-	public void showTestMap(@RequestBody() Map<String,Object> map) {
-		System.out.println(map);
+	public void showTestMap(@RequestBody() List<SeatDto> seat) {
+		System.out.println(seat);
 	}
 	
 }
