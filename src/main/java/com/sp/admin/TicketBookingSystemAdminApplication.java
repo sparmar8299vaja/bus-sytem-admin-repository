@@ -27,6 +27,7 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	// added comments
 	public static void main(String[] args) {
 		SpringApplication.run(TicketBookingSystemAdminApplication.class, args);
 	}
@@ -37,7 +38,6 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 		System.out.println(environment.getProperty("test"));
 	}
 
-	// Oye Done
 	public void testGetAPI() {
 		// PROMISE
 		String url = "http://localhost:9090/authenticate/v1/createtocken";
