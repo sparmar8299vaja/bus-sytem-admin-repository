@@ -27,7 +27,6 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	// added comments
 	public static void main(String[] args) {
 		SpringApplication.run(TicketBookingSystemAdminApplication.class, args);
 	}
