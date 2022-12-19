@@ -2,8 +2,6 @@ package com.sp.admin;
 
 import java.util.Arrays;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,28 +23,29 @@ public class TicketBookingSystemAdminApplication implements CommandLineRunner {
 
 	@Autowired
 	private Environment environment;
-	
+
 	@Autowired
 	private RestTemplate restTemplate;
-	
+
+	// added comments
 	public static void main(String[] args) {
 		SpringApplication.run(TicketBookingSystemAdminApplication.class, args);
 	}
-	
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println(environment.getProperty("env"));
 		System.out.println(environment.getProperty("test"));
 	}
-	
+
 	public void testGetAPI() {
-		//PROMISE
+		// PROMISE
 		String url = "http://localhost:9090/authenticate/v1/createtocken";
-		UserAuthenticationDto dto = new UserAuthenticationDto.UserDtoBuilder().setName("s12").setPassword("ancbdhas").build();
+		UserAuthenticationDto dto = new UserAuthenticationDto.UserDtoBuilder().setName("s12").setPassword("ancbdhas")
+				.build();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity<UserAuthenticationDto> entity = new HttpEntity<UserAuthenticationDto>(dto,headers);
+		HttpEntity<UserAuthenticationDto> entity = new HttpEntity<UserAuthenticationDto>(dto, headers);
 		ResponseEntity<String> exchange = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
 		System.out.println(exchange.getBody());
 	}
